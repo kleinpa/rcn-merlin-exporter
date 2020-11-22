@@ -1,0 +1,25 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+load("@io_bazel_rules_docker//go:image.bzl", "go_image")
+
+go_library(
+    name = "merlin_exporter_lib",
+    srcs = ["main.go"],
+    importpath = "github.com/kleinpa/rcn-merlin-exporter/cmd/merlin_exporter",
+    visibility = ["//visibility:private"],
+    deps = [
+        "//:rcn-merlin-exporter",
+        "@com_github_prometheus_client_golang//prometheus",
+        "@com_github_prometheus_client_golang//prometheus/promhttp",
+    ],
+)
+
+go_binary(
+    name = "merlin_exporter",
+    embed = [":merlin_exporter_lib"],
+    visibility = ["//visibility:public"],
+)
+
+go_image(
+    name = "merlin_exporter_image",
+    binary = ":merlin_exporter",
+)
