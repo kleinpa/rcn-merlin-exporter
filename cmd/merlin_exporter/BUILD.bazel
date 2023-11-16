@@ -1,5 +1,6 @@
-load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
-load("@io_bazel_rules_docker//go:image.bzl", "go_image")
+load("@rules_go//go:def.bzl", "go_binary", "go_library")
+load("@rules_pkg//pkg:tar.bzl", "pkg_tar")
+load("@rules_oci//oci:defs.bzl", "oci_image", "oci_push")
 
 go_library(
     name = "merlin_exporter_lib",
@@ -19,7 +20,21 @@ go_binary(
     visibility = ["//visibility:public"],
 )
 
-go_image(
-    name = "merlin_exporter_image",
-    binary = ":merlin_exporter",
+pkg_tar(
+    name = "tar",
+    srcs = [":merlin_exporter"],
+)
+
+oci_image(
+    name = "image",
+    base = "@distroless_base",
+    entrypoint = ["/merlin_exporter"],
+    tars = [":tar"],
+)
+
+oci_push(
+    name = "image_push",
+    image = ":image",
+    remote_tags = ["latest"],
+    repository = "ghcr.io/kleinpa/rcn-merlin-exporter",
 )
