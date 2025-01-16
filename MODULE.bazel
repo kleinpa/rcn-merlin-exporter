@@ -1,6 +1,6 @@
 module(name = "rcn_merlin_exporter", version = "1.0")
 
-bazel_dep(name = "rules_go", version = "0.51.0")
+bazel_dep(name = "rules_go", version = "0.52.0")
 bazel_dep(name = "gazelle", version = "0.41.0")
 
 bazel_dep(name = "rules_oci", version = "2.2.0")
