@@ -8,7 +8,7 @@ bazel_dep(name = "rules_pkg", version = "1.1.0")
 oci = use_extension("@rules_oci//oci:extensions.bzl", "oci")
 oci.pull(
     name = "rcn_merlin_exporter_distroless_base",
-    digest = "sha256:d62747f6aec0b531e086f7f961bd93d2a908862636ffd47c0e180df0bec744be",
+    digest = "sha256:c1cbcec08d39c81adbefb80cabc51cba285465866f7b5ab15ddb2fcae51a1aed",
     image = "gcr.io/distroless/cc",
     platforms = ["linux/amd64"],
 )
