@@ -28,7 +28,7 @@ pkg_tar(
 
 oci_image(
     name = "image",
-    base = "@distroless_base",
+    base = "@rcn_merlin_exporter_distroless_base",
     entrypoint = ["/merlin_exporter"],
     tars = [":tar"],
 )

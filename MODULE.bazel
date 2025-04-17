@@ -1,22 +1,19 @@
 module(name = "rcn_merlin_exporter", version = "1.0")
 
-bazel_dep(name = "rules_go", version = "0.54.0")
 bazel_dep(name = "gazelle", version = "0.42.0")
-
+bazel_dep(name = "rules_go", version = "0.54.0")
 bazel_dep(name = "rules_oci", version = "2.2.5")
 bazel_dep(name = "rules_pkg", version = "1.1.0")
-bazel_dep(name = "rules_proto", version = "7.1.0")
 
 oci = use_extension("@rules_oci//oci:extensions.bzl", "oci")
 oci.pull(
-    name = "distroless_base",
-    digest = "sha256:c1cbcec08d39c81adbefb80cabc51cba285465866f7b5ab15ddb2fcae51a1aed",
+    name = "rcn_merlin_exporter_distroless_base",
+    digest = "sha256:d62747f6aec0b531e086f7f961bd93d2a908862636ffd47c0e180df0bec744be",
     image = "gcr.io/distroless/cc",
     platforms = ["linux/amd64"],
 )
-use_repo(oci, "distroless_base")
+use_repo(oci, "rcn_merlin_exporter_distroless_base", "rcn_merlin_exporter_distroless_base_linux_amd64")
 
-# Pull in Go dependencies
 go_deps = use_extension("@gazelle//:extensions.bzl", "go_deps")
 go_deps.from_file(go_mod = "//:go.mod")
 use_repo(
